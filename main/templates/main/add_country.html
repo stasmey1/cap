@@ -1,0 +1,22 @@
+{% extends 'main/base_templates/index.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+<title>Добавить страну</title>
+{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-6">
+
+
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-primary mt-2">Создать</button>
+        </form>
+    </div>
+
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,78 @@
+{% extends 'main/base_templates/index.html' %}
+
+{% block title %}
+<title>Игра | Столицы</title>
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="row">
+    {% for group in groups %}
+    <div class="col-2">
+        <form name="form_group" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light btn-lg mt-2"
+                    name="group" value="{{group.id}}">{{group}}
+            </button>
+        </form>
+        <br>
+    </div>
+    {% endfor %}
+
+    <div class="col-2">
+        <form name="form_group" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light btn-lg mt-2"
+                    name="group" value="all">все
+            </button>
+        </form>
+        <br>
+    </div>
+
+    {% if actiual_group %}
+    <div class="col-2 mt-2">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>{{actiual_group}}</h5>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="text-center">
+    <h1 class="display-3 mb-3">{{country}}</h1>
+</div>
+<div class="row">
+    {% for i in capitals %}
+    <div class="col-6">
+        <form name="form_capital" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light btn-lg"
+                    style="--bs-btn-padding-y: 3rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: 3rem; width: 100%;"
+                    name="capital" value="{{i}}">{{i}}
+            </button>
+        </form>
+        <br>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="col">
+    {% if nice %}
+    <div class="alert alert-success" role="alert">
+        <h2>{{massage}}</h2>
+    </div>
+    {% endif %}
+
+    {% if loose %}
+    <div class="alert alert-danger" role="alert">
+        <h2>{{massage}}</h2>
+    </div>
+    {% endif %}
+</div>
+
+
+{% endblock content %}

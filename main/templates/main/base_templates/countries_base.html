@@ -1,0 +1,22 @@
+{% extends 'main/base_templates/index.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+{% block search %}
+<div class="search col-3 mt-3">
+    <form action="/search/" method="get">
+        <div class="row">
+            <div class="col-9">
+                {% csrf_token %}
+                {{ form|crispy }}
+            </div>
+            <div class="col-3">
+                <button type="submit" value="search_input" class="btn btn-primary">найти</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock search %}
+
+{% endblock content %}

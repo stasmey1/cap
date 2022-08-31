@@ -1,0 +1,38 @@
+{% extends 'main/base_templates/index.html' %}
+
+
+{% block title %}
+<title>{{country}}</title>
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="card mb-3 mt-3" style="max-width: 100%">
+    <div class="row g-0">
+        {% if country.flag %}
+        <div class="col-md-4">
+            <img src="{{country.flag.url}}" class="img-fluid rounded-start" alt="...">
+        </div>
+        {% endif %}
+        <div class="col-md-8">
+            <div class="card-body">
+                <h1 class="card-title">{{country}}</h1>
+                <h3>Столица - {{country.capital}}</h3>
+                {% if country.group %}
+                <h3>Относится к {{country.group}}</h3>
+                {% endif %}
+                {% if country.info %}
+                <p class="card-text">{{country.info}}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<a href="{% url 'edit_country' country.pk  %}" class="btn btn-success">Обновить данные</a>
+<a href="{% url 'delete_country' country.pk  %}" class="btn btn-danger">Удалить</a>
+
+
+{% endblock content %}

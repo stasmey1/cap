@@ -1,0 +1,70 @@
+{% extends 'main/base_templates/countries_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>Тренеровка</title>
+{% endblock title %}
+
+{% block content %}
+
+
+{% block search %}
+{{block.super}}
+{% endblock search %}
+
+<div class="row">
+    {% for group in groups %}
+    <div class="col-2">
+        <a href="{{group.get_absolute_url}}" class="btn btn-light btn-lg mt-4" role="button" aria-pressed="true">{{group.name}}</a>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="row">
+    {% for country in country_list %}
+    <div class="col-3 mt-3">
+        <div class="card" style="width: 18rem; height: 330px;">
+            {% if country.flag %}
+            <a href="{{country.get_absolute_url}}">
+                <img src="{{country.flag.url}}" class="card-img-top" alt="...">
+            </a>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{country}}</h5>
+                <p class="card-text">{{country.capital}}</p>
+                <a href="{{country.get_absolute_url}}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if page_obj.has_other_pages %}
+<nav aria-label="Page navigation example">
+
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="?page=1">в начало</a></li>
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">&lt</a></li>
+        {% endif %}
+
+        {% for p in paginator.page_range %}
+        {% if p == page_obj.number %}
+        <li class="page-item active"><a class="page-link" href="?page={{p}}">{{p}} </a></li>
+        {% elif p >= page_obj.number|add:-1 and p <= page_obj.number|add:1 %}
+        <li class="page-item"><a class="page-link" href="?page={{p}}">{{p}} </a></li>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">&gt</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.paginator.num_pages}}">в конец</a></li>
+    </ul>
+
+</nav>
+{% endif %}
+
+
+{% endblock content %}
