@@ -9,8 +9,6 @@ from . import utils
 from .forms import *
 
 
-
-
 class AllCountries(ListView):
     model = Country
     template_name = 'main/training.html'
@@ -33,26 +31,24 @@ def group(request, pk):
 
 
 def start_game(request):
-    activ_link_game = True
+    activ_link_game: bool = True
     if request.GET.get('group'):
         utils.group_global = request.GET.get('group')
+
     game = utils.Game()
     groups = Group.objects.all()
     country = game.country
     capitals = game.cap_list_limited()
     form_capital = CapitalSelectForm()
     form_group = GroupSelectForm()
-    try:
-        actiual_group = Group.objects.get(id=utils.group_global)
-    except:
-        actiual_group = 'все страны'
+    actiual_group = Group.objects.get(id=utils.group_global) if str(
+        group).isdigit() else 'все страны'
+
     if request.GET.get('capital'):
         if request.GET.get('capital') == utils.old_capital[-2]:
-            nice = True
-            massage = 'Верно!!!'
+            nice, massage = True, 'Верно!!!'
         else:
-            loose = True
-            massage = f'Столица {utils.old_country[-2]} - {utils.old_capital[-2]}'
+            loose, massage = True, f'Столица {utils.old_country[-2]} - {utils.old_capital[-2]}'
     template = 'main/start_game.html'
     return render(request, template, locals())
 
@@ -78,6 +74,7 @@ class AddCountry(LoginRequiredMixin, CreateView):
         context['activ_link_add'] = True
         return context
 
+
 @login_required
 def edit_country(request, pk):
     country = Country.objects.get(pk=pk)
@@ -97,6 +94,7 @@ class DeleteCountry(LoginRequiredMixin, DeleteView):
     model = Country
     template_name = 'main/delete_country.html'
     success_url = '/'
+
 
 # добавление полей в БД из файлов
 
@@ -128,6 +126,7 @@ def search(request):
             country = get_object_or_404(Country, name__iexact=cd['search_input'].capitalize())
     template = 'main/country.html'
     return render(request, template, locals())
+
 
 def profile(request):
     template = 'registration/profile.html'

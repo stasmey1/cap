@@ -8,11 +8,10 @@ group_global = None
 
 class Game:
     def __init__(self):
-        if str(group_global).isdigit():
-            self.country_set = Country.objects.filter(group_id=group_global)
-        else:
-            self.country_set = Country.objects.all()
-        self.country = random.choices(self.country_set)[0]
+        self.country_set = Country.objects.filter(group_id=group_global) if str(
+            group_global).isdigit() else Country.objects.all()
+
+        self.country = random.choice(self.country_set)
         old_country.append(self.country)
         old_capital.append(self.country.capital)
 
@@ -23,6 +22,3 @@ class Game:
         cap_list_limited.append(self.country.capital)
         random.shuffle(cap_list_limited)
         return cap_list_limited
-
-
-
